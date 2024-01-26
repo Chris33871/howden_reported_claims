@@ -14,6 +14,8 @@ There are 4 scrips to run in order to get the results to each question. The PDF 
   - [Installation](#installation)
   - [Run](#Running-the-Project)
 
+- [Footer](#Footer)
+
 ## Features
 
 - Creating sql insert scripts
@@ -81,3 +83,7 @@ To run a script, execute
 `python utils/name_of_the_script_to_run.py`
 
 The script will do as its name indicates
+
+##### Footer
+
+API used: [ExchangeRate-API](https://app.exchangerate-api.com/dashboard)
