@@ -84,6 +84,10 @@ To run a script, execute
 
 The script will do as its name indicates
 
+Keep in mind that there is a limited amount of API request quota available and only 2 weeks of free usage.
+
+API request left since last run: 1300 - Free days left since last run: 13
+
 ##### Footer
 
 API used: [ExchangeRate-API](https://app.exchangerate-api.com/dashboard)
