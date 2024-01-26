@@ -39,7 +39,7 @@ def plot_ultimate_loss_ratio(tabname):
     ax2.set_ylabel('Earned Premium')
 
     # x-axis label and title
-    ax1.set_xlabel('Year')
+    ax1.set_xlabel('U/W year')
     plt.title('Ultimate Loss Ratio')
 
     # Set legend
