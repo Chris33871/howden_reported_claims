@@ -4,3 +4,4 @@ openpyxl==3.1.2
 pyarrow==15.0.0
 matplotlib==3.8.2
 python-dotenv==1.0.1
+os-sys==2.1.4
