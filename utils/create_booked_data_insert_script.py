@@ -6,7 +6,7 @@ def booked_data_insert_script(spreadsheet, *tabnames):
     try:
         if len(tabnames) < 2:
             print("Please provide at least two sheet names.")
-            return 400  # Bad request status code
+            return 400
 
         dfs = []
         for tabname in tabnames:
@@ -53,10 +53,10 @@ def booked_data_insert_script(spreadsheet, *tabnames):
                 sql_file.write(statement + "\n")
 
         print('Script created successfully')
-        return 200  # Success status code
+        return 200
     except Exception as e:
         print(f"An error occurred: {e}")
-        return 500  # Error status code
+        return 500
 
 
 booked_data_insert_script('Howden_CompanyXYZ_2021_Data.xlsx', 'GL-np', 'MA-np')
