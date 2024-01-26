@@ -1,4 +1,5 @@
 venv/
 *.pdf
+*.sql
 *ipynb
 ipynb_checkpoints/
