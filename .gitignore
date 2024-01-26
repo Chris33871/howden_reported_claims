@@ -3,3 +3,4 @@ venv/
 *.sql
 *ipynb
 ipynb_checkpoints/
+.env
