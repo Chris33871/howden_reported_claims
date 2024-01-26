@@ -69,11 +69,11 @@ def create_insert_statements(df_melted):
             insert_statement = f'INSERT INTO [ClaimDevelopment].[FactStatistical] ([CompanyName], [LineOfBusiness], [Currency], [Year], [LossIncurredRatio], [DevelopmentMonth], [DWCreatedDate], [DWCreatedBy]) VALUES ({values});'
             insert_statements.append(insert_statement)
 
-        # Writing the insert statements to a file in the "InsertScripts" folder
+        # Creating the folder if it doesn't exist
         folder_path = "./InsertScripts"
         os.makedirs(folder_path, exist_ok=True)
         file_path = os.path.join(
-            folder_path, "insert_script_statistical_data.sql")
+            folder_path, "statistical_data_insert_script.sql")
 
         # Writing the insert statements to a file
         with open(file_path, "w") as sql_file:
@@ -96,4 +96,3 @@ def main(spreadsheet, *tabnames):
 
 if __name__ == "__main__":
     main("Howden_CompanyXYZ_2021_Data.xlsx", "GL-np", "MA-np")
-# CHANGE THE WRITE PATH TO A FIXED FOLDER
