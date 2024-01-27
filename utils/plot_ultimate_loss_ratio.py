@@ -11,8 +11,8 @@ def read_excel_file(tabname):
         df_booked_data = df_booked_data.drop(
             df_booked_data.columns[2:15], axis=1)
     except Exception as e:
-        return {500, f"Error reading Excel file: {e}"}
-    return df_booked_data
+        return 500, f"Error reading Excel file: {e}"
+    return 200, df_booked_data
 
 
 def process_data(df_booked_data):
@@ -28,8 +28,8 @@ def process_data(df_booked_data):
             'Gross written premium': 'GrossWrittenPremium',
         })
     except Exception as e:
-        return {500, f"Error processing data: {e}"}
-    return df_booked_data
+        return 500, f"Error processing data: {e}"
+    return 200, df_booked_data
 
 
 def plot_data(df_booked_data):
@@ -62,13 +62,21 @@ def plot_data(df_booked_data):
         plt.show()
 
     except Exception as e:
-        return {500, f"Error creating plot: {e}"}
+        return 500, f"Error creating plot: {e}"
 
 
 def main(tabname):
-    df_booked_data = read_excel_file(tabname)
-    df_booked_data = process_data(df_booked_data)
-    plot_data(df_booked_data)
+    status, df_booked_data = read_excel_file(tabname)
+    if status != 200:
+        return f"Error reading Excel file: {df_booked_data}"
+
+    status, df_booked_data = process_data(df_booked_data)
+    if status != 200:
+        return f"Error processing data: {df_booked_data}"
+
+    status = plot_data(df_booked_data)
+    if status != 200:
+        return "Error creating plot"
 
 
 if __name__ == "__main__":

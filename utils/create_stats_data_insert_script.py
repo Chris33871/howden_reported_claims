@@ -18,9 +18,9 @@ def read_excel_file(spreadsheet, *tabnames):
             # Dropping the Gross written premium column
             df = df.drop(df.columns[1], axis=1)
             dfs.append(df)
-        return dfs
+        return 200, dfs
     except Exception as e:
-        return {500, f"Error reading Excel file: {e}"}
+        return 500, f"Error reading Excel file: {e}"
 
 
 def process_data(dfs):
@@ -54,10 +54,10 @@ def process_data(dfs):
         df_melted["DWCreatedDate"] = datetime.today().strftime("%Y-%m-%d")
         df_melted["DWCreatedBy"] = "Christian"
 
-        return df_melted
+        return 200, df_melted
 
     except Exception as e:
-        return {500, f"Error processing data: {e}"}
+        return 500, f"Error processing data: {e}"
 
 
 def create_insert_statements(df_melted):
@@ -81,17 +81,27 @@ def create_insert_statements(df_melted):
                 sql_file.write(statement + "\n")
 
         print("Script created successfully")
-        return 200
+        return 200, file_path
 
     except Exception as e:
         # Internal server error status code
-        return {500, f"Error creating the insert script {e}"}
+        return 500, f"Error creating the insert script {e}"
 
 
 def main(spreadsheet, *tabnames):
-    dfs = read_excel_file(spreadsheet, *tabnames)
-    df_melted = process_data(dfs)
-    create_insert_statements(df_melted)
+    status, dfs = read_excel_file(spreadsheet, *tabnames)
+    if status != 200:
+        return 500, f"Error reading Excel file: {dfs}"
+
+    status, df_melted = process_data(dfs)
+    if status != 200:
+        return 500, f"Error processing data: {df_melted}"
+
+    status, message = create_insert_statements(df_melted)
+    if status != 200:
+        return 500, f"Error creating the insert script: {message}"
+
+    print("Data processing and script creation completed successfully.")
 
 
 if __name__ == "__main__":

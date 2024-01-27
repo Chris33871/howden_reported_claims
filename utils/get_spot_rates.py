@@ -20,11 +20,11 @@ def get_exchange_rate(api_key, base_currency='USD', target_currency='AUD'):
             exchange_rate = data['conversion_rates'].get(target_currency)
             return exchange_rate
         else:
-            return {500, f"Error from API: {data.get('error')}"}
+            return 500, f"Error from API: {data.get('error')}"
 
     # If the API returns an error, we return an error message
     except requests.exceptions.RequestException as e:
-        return {500, f"Error sending API GET request: {e}"}
+        return 500, f"Error sending API GET request: {e}"
 
 
 # Function to convert the amount to USD
@@ -44,7 +44,7 @@ def create_excel_file(data):
         print(f"Excel file '{file_name}' created successfully.")
 
     except Exception as e:
-        return {500, f"Error creating Excel file: {e}"}
+        return 500, f"Error creating Excel file: {e}"
 
 
 def main(*target_currencies):

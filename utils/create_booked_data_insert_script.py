@@ -7,7 +7,8 @@ def read_excel_file(spreadsheet, *tabnames):
 
     try:
         if len(tabnames) < 2:
-            return {400, "Please provide at least two sheet names."}
+            print("Please provide at least two sheet names.")
+            return 400, "Please provide at least two sheet names."
 
         dfs = []
         for tabname in tabnames:
@@ -17,9 +18,9 @@ def read_excel_file(spreadsheet, *tabnames):
             df["CompanyName"] = "XYZ"
             df = df.drop(df.columns[2:15], axis=1)
             dfs.append(df)
-        return dfs
+        return 200, dfs
     except Exception as e:
-        return {500, f"Error reading Excel file: {e}"}
+        return 500, f"Error reading Excel file: {e}"
 
 
 def process_data(dfs):
@@ -52,11 +53,11 @@ def process_data(dfs):
             "U/W year": "Year",
             "Gross written premium": "GrossWrittenPremium",
         })
-        return df_combined_booked_data
+        return 200, df_combined_booked_data
 
     except Exception as e:
         print(f"Error processing data: {e}")
-        return {500, f"Error processing data: {e}"}
+        return 500, f"Error processing data: {e}"
 
 
 def create_insert_statements(df_combined_booked_data):
@@ -79,15 +80,25 @@ def create_insert_statements(df_combined_booked_data):
                 sql_file.write(statement + "\n")
 
         print("Script created successfully")
-        return 200
+        return 200, file_path
     except Exception as e:
-        return {500, f"Error creating insert statements: {e}"}
+        return 500, f"Error creating insert statements: {e}"
 
 
 def main(spreadsheet, *tabnames):
-    dfs = read_excel_file(spreadsheet, *tabnames)
-    df_combined_booked_data = process_data(dfs)
-    create_insert_statements(df_combined_booked_data)
+    status, dfs = read_excel_file(spreadsheet, *tabnames)
+    if status != 200:
+        return f"Error reading Excel file: {dfs}"
+
+    status, df_combined_booked_data = process_data(dfs)
+    if status != 200:
+        return f"Error processing data: {df_combined_booked_data}"
+
+    status, file_path = create_insert_statements(df_combined_booked_data)
+    if status != 200:
+        return f"Error creating the insert script: {file_path}"
+
+    print("Data processing and script creation completed successfully.")
 
 
 if __name__ == "__main__":
