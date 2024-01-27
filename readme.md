@@ -79,6 +79,8 @@ Provide step-by-step instructions on how to set up the project locally. Include 
 
 ### Running the Project
 
+Create a .env file and follow the .env.template file. The API key will be shared by mail.
+
 To run a script, execute
 `python utils/name_of_the_script_to_run.py`
 
